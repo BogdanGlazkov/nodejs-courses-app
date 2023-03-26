@@ -4,6 +4,18 @@ const fs = require("fs");
 const p = path.join(path.dirname(require.main.filename), "data", "cart.json");
 
 class Cart {
+  static async fetch() {
+    return new Promise((resolve, reject) => {
+      fs.readFile(p, "utf-8", (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(JSON.parse(data));
+        }
+      });
+    });
+  }
+
   static async add(course) {
     const cart = await Cart.fetch();
     const idx = cart.courses.findIndex((c) => c.id === course.id);
@@ -29,13 +41,24 @@ class Cart {
     });
   }
 
-  static async fetch() {
+  static async remove(id) {
+    const cart = await Cart.fetch();
+    const idx = cart.courses.findIndex((c) => c.id === id);
+    const course = cart.courses[idx];
+
+    if (course.count === 1) {
+      cart.courses = cart.courses.filter((c) => c.id !== id);
+    } else {
+      cart.courses[idx].count--;
+    }
+    cart.price -= course.price;
+
     return new Promise((resolve, reject) => {
-      fs.readFile(p, "utf-8", (err, data) => {
+      fs.writeFile(p, JSON.stringify(cart), (err) => {
         if (err) {
           reject(err);
         } else {
-          resolve(JSON.parse(data));
+          resolve(cart);
         }
       });
     });
