@@ -7,11 +7,15 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { title, price, img } = req.body;
-  const course = new Course(title, price, img);
-  await course.save();
+  try {
+    const { title, price, img } = req.body;
+    const course = new Course({ title, price, img });
+    await course.save();
 
-  res.redirect("/courses");
+    res.redirect("/courses");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
