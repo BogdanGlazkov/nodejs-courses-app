@@ -3,7 +3,7 @@ const Course = require("../models/courseModel");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const courses = await Course.find().lean();
+  const courses = await Course.find().lean().populate("userId", "email name");
   res.render("courses", { title: "Courses", isCourses: true, courses });
 });
 

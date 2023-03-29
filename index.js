@@ -12,6 +12,7 @@ const homeRoutes = require("./routes/home");
 const cartRoutes = require("./routes/cart");
 const addRoutes = require("./routes/add");
 const coursesRoutes = require("./routes/courses");
+const User = require("./models/userModel");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,16 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
+app.use(async (req, res, next) => {
+  try {
+    const user = await User.findById("6424a2337527783a76be8255");
+    req.user = user;
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use("/", homeRoutes);
@@ -40,6 +51,17 @@ async function start() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+
+    const candidate = await User.findOne();
+    if (!candidate) {
+      const user = new User({
+        email: "user1@test.com",
+        name: "User1",
+        cart: { items: [] },
+      });
+      await user.save();
+    }
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
