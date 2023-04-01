@@ -29,7 +29,7 @@ if ($cart) {
                   <td>
                     <button
                       class="btn btn-small js-remove"
-                      data-id="${c.id}"
+                      data-id="${c._id}"
                     >Delete</button>
                   </td>
                 </tr>
