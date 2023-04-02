@@ -42,6 +42,12 @@
       <h1>Create account</h1>
       <form action="/auth/register" method="POST">
         <div class="input-field">
+          <input id="name" name="name" type="text" class="validate" required />
+          <label for="name">Your name</label>
+          <span class="helper-text" data-error="Type name"></span>
+        </div>
+
+        <div class="input-field">
           <input
             id="remail"
             name="email"
@@ -74,7 +80,7 @@
             required
           />
           <label for="confirm">Password once again</label>
-          <span class="helper-text" data-error="Type password"></span>
+          <span class="helper-text" data-error="Type password again"></span>
         </div>
 
         <button class="btn btn-primary" type="submit">Register</button>

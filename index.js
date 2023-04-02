@@ -16,8 +16,8 @@ const addRoutes = require("./routes/add");
 const coursesRoutes = require("./routes/courses");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
-const User = require("./models/userModel");
 const varMiddleware = require("./middlewares/variables");
+const userMiddleware = require("./middlewares/user");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -48,6 +48,7 @@ app.use(
   })
 );
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 app.use("/", homeRoutes);
 app.use("/add", addRoutes);
