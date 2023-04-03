@@ -4,6 +4,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
 const path = require("path");
 const csrf = require("csurf");
+const flash = require("connect-flash");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const Handlebars = require("handlebars");
@@ -49,6 +50,7 @@ app.use(
   })
 );
 app.use(csrf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
 
