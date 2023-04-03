@@ -2,6 +2,8 @@
 
 ## In the project directory, you can run:
 
-## npm i
+## npm ci (to install all dependencies)
 
-## npm start
+## npm run dev (for development mode)
+
+## npm start (for production mode)
