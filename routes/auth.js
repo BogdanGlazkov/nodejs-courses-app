@@ -1,7 +1,18 @@
 const { Router } = require("express");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const sendgrid = require("nodemailer-sendgrid-transport");
+require("dotenv").config();
 const User = require("../models/userModel");
+const regEmail = require("../emails/registration");
 const router = Router();
+
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const transporter = nodemailer.createTransport(
+  sendgrid({
+    auth: { api_key: SENDGRID_API_KEY },
+  })
+);
 
 router.get("/login", async (req, res) => {
   res.render("auth/login", {
@@ -68,6 +79,7 @@ router.post("/register", async (req, res) => {
         cart: { items: [] },
       });
       await user.save();
+      await transporter.sendMail(regEmail(email));
       res.redirect("/auth/login#login");
     }
   } catch (error) {

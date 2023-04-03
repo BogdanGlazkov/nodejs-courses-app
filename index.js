@@ -24,6 +24,7 @@ const userMiddleware = require("./middlewares/user");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_HOST = process.env.DB_HOST;
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const hbs = exphbs.create({
   defaultLayout: "main",
@@ -43,7 +44,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "some secret word",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store,
