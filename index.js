@@ -3,6 +3,7 @@ const exphbs = require("express-handlebars");
 const session = require("express-session");
 const MongoStore = require("connect-mongodb-session")(session);
 const path = require("path");
+const csrf = require("csurf");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const Handlebars = require("handlebars");
@@ -47,6 +48,7 @@ app.use(
     store,
   })
 );
+app.use(csrf());
 app.use(varMiddleware);
 app.use(userMiddleware);
 
