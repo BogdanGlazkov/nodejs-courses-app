@@ -18,9 +18,11 @@ const addRoutes = require("./routes/add");
 const coursesRoutes = require("./routes/courses");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require("./routes/auth");
+const profileRoutes = require("./routes/profile");
 const varMiddleware = require("./middlewares/variables");
 const userMiddleware = require("./middlewares/user");
 const errorPage = require("./middlewares/errorPage");
+const fileMiddleware = require("./middlewares/file");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -52,6 +54,7 @@ app.use(
     store,
   })
 );
+app.use(fileMiddleware.single("avatar"));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
@@ -63,6 +66,7 @@ app.use("/courses", coursesRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", ordersRoutes);
 app.use("/auth", authRoutes);
+app.use("/profile", profileRoutes);
 
 app.use(errorPage);
 
