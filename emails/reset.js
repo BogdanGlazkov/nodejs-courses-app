@@ -1,6 +1,6 @@
 require("dotenv").config();
 const EMAIL_FROM = process.env.EMAIL_FROM;
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.BASE_URL_PROD;
 
 module.exports = function (email, token) {
   return {
